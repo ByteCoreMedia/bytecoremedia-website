@@ -1,773 +1,811 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>ByteCore Media — Deterministic AI Governance</title>
-
-    <style>
-        :root {
-            --bg: #020617;
-            --bg-soft: #020617;
-            --card: #020617;
-            --card-elevated: #020617;
-            --border-subtle: #1f2937;
-            --accent: #fbbf24;
-            --accent-soft: rgba(251, 191, 36, 0.14);
-            --accent-strong: #facc15;
-            --text-main: #e5e7eb;
-            --text-soft: #9ca3af;
-            --text-subtle: #6b7280;
-        }
-
-        * {
-            box-sizing: border-box;
-        }
-
-        body {
-            margin: 0;
-            font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
-                sans-serif;
-            background: radial-gradient(circle at top, #111827 0, #020617 55%, #000 100%);
-            color: var(--text-main);
-            line-height: 1.6;
-        }
-
-        a {
-            color: var(--accent);
-            text-decoration: none;
-            font-weight: 500;
-        }
-
-        a:visited {
-            color: var(--accent-strong);
-        }
-
-        a:hover,
-        a:focus {
-            text-decoration: underline;
-        }
-
-        .page {
-            min-height: 100vh;
-            display: flex;
-            flex-direction: column;
-        }
-
-        /* Top bar / nav */
-        .nav {
-            max-width: 1080px;
-            margin: 0 auto;
-            padding: 20px 20px 8px;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-        }
-
-        .nav-left {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-
-        .brand-mark {
-            width: 32px;
-            height: 32px;
-            border-radius: 999px;
-            border: 1px solid var(--accent-soft);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 0.9rem;
-            font-weight: 700;
-            letter-spacing: 0.06em;
-            color: var(--accent);
-            background: radial-gradient(circle at 30% 0, #111827, #020617);
-        }
-
-        .brand-text {
-            display: flex;
-            flex-direction: column;
-        }
-
-        .brand-title {
-            font-size: 1.1rem;
-            font-weight: 600;
-            letter-spacing: 0.04em;
-        }
-
-        .brand-tagline {
-            font-size: 0.8rem;
-            color: var(--text-soft);
-        }
-
-        .nav-links {
-            display: flex;
-            gap: 18px;
-            font-size: 0.9rem;
-        }
-
-        .nav-links a {
-            color: var(--text-soft);
-            font-weight: 400;
-        }
-
-        .nav-links a:hover {
-            color: var(--accent);
-            text-decoration: none;
-        }
-
-        /* Hero */
-        header.hero {
-            border-top: 1px solid rgba(31, 41, 55, 0.8);
-            border-bottom: 1px solid rgba(31, 41, 55, 0.8);
-            background: radial-gradient(circle at top left,
-                        rgba(148, 163, 184, 0.12),
-                        transparent 55%)
-                        ,radial-gradient(circle at bottom right,
-                        rgba(15, 23, 42, 0.9),
-                        #020617 70%);
-        }
-
-        .hero-inner {
-            max-width: 1080px;
-            margin: 0 auto;
-            padding: 40px 20px 32px;
-            display: grid;
-            grid-template-columns: minmax(0, 3fr) minmax(0, 2.4fr);
-            gap: 40px;
-            align-items: center;
-        }
-
-        .eyebrow {
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            padding: 4px 10px;
-            border-radius: 999px;
-            background: rgba(15, 23, 42, 0.9);
-            border: 1px solid rgba(148, 163, 184, 0.4);
-            font-size: 0.75rem;
-            text-transform: uppercase;
-            letter-spacing: 0.1em;
-            color: var(--text-soft);
-            margin-bottom: 14px;
-        }
-
-        .eyebrow-dot {
-            width: 6px;
-            height: 6px;
-            border-radius: 999px;
-            background: var(--accent);
-        }
-
-        h1.hero-title {
-            font-size: clamp(2.4rem, 3vw + 1rem, 3.1rem);
-            line-height: 1.1;
-            margin: 0 0 14px;
-        }
-
-        .hero-highlight {
-            color: var(--accent);
-        }
-
-        .hero-subtitle {
-            font-size: 1.05rem;
-            color: var(--text-soft);
-            max-width: 32rem;
-            margin-bottom: 22px;
-        }
-
-        .hero-subsubtitle {
-            font-size: 0.95rem;
-            color: var(--text-subtle);
-            max-width: 31rem;
-        }
-
-        .hero-actions {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 12px;
-            margin-top: 26px;
-        }
-
-        .btn {
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            padding: 0.75rem 1.6rem;
-            border-radius: 999px;
-            border: 1px solid transparent;
-            font-size: 0.95rem;
-            font-weight: 500;
-            cursor: pointer;
-            white-space: nowrap;
-        }
-
-        .btn-primary {
-            background: linear-gradient(135deg, var(--accent), var(--accent-strong));
-            color: #111827;
-            border-color: rgba(248, 250, 252, 0.08);
-        }
-
-        .btn-primary:hover {
-            filter: brightness(1.02);
-            text-decoration: none;
-        }
-
-        .btn-ghost {
-            background: rgba(15, 23, 42, 0.7);
-            color: var(--text-main);
-            border-color: rgba(148, 163, 184, 0.45);
-        }
-
-        .btn-ghost:hover {
-            background: rgba(15, 23, 42, 0.95);
-            text-decoration: none;
-        }
-
-        .btn span.icon {
-            margin-left: 8px;
-            font-size: 1.05rem;
-        }
-
-        .hero-aside {
-            border-radius: 18px;
-            border: 1px solid rgba(148, 163, 184, 0.4);
-            background: radial-gradient(circle at top,
-                        rgba(15, 23, 42, 0.95),
-                        #020617 70%);
-            padding: 18px 18px 20px;
-            box-shadow:
-                0 18px 40px rgba(0, 0, 0, 0.7),
-                0 0 0 1px rgba(15, 23, 42, 1);
-        }
-
-        .hero-aside-header {
-            font-size: 0.8rem;
-            text-transform: uppercase;
-            letter-spacing: 0.12em;
-            color: var(--text-subtle);
-            margin-bottom: 4px;
-        }
-
-        .hero-aside-title {
-            font-size: 1rem;
-            font-weight: 600;
-            margin-bottom: 6px;
-        }
-
-        .hero-aside-body {
-            font-size: 0.9rem;
-            color: var(--text-soft);
-            margin-bottom: 10px;
-        }
-
-        .hero-aside-list {
-            list-style: none;
-            padding: 0;
-            margin: 10px 0 0;
-            font-size: 0.86rem;
-            color: var(--text-soft);
-        }
-
-        .hero-aside-list li {
-            display: flex;
-            align-items: flex-start;
-            gap: 8px;
-            margin-bottom: 6px;
-        }
-
-        .hero-aside-badge {
-            display: inline-flex;
-            align-items: center;
-            padding: 3px 8px;
-            border-radius: 999px;
-            background: var(--accent-soft);
-            color: var(--accent-strong);
-            font-size: 0.7rem;
-            text-transform: uppercase;
-            letter-spacing: 0.12em;
-        }
-
-        /* Sections */
-        main {
-            flex: 1;
-        }
-
-        .section {
-            max-width: 980px;
-            margin: 60px auto 0;
-            padding: 0 20px;
-        }
-
-        .section-heading-row {
-            display: flex;
-            justify-content: space-between;
-            align-items: baseline;
-            gap: 20px;
-            margin-bottom: 8px;
-        }
-
-        h2.section-title {
-            font-size: 1.4rem;
-            margin: 0;
-            border-left: 3px solid var(--accent);
-            padding-left: 10px;
-        }
-
-        .section-kicker {
-            font-size: 0.82rem;
-            text-transform: uppercase;
-            letter-spacing: 0.16em;
-            color: var(--text-subtle);
-        }
-
-        .section-lead {
-            font-size: 0.98rem;
-            color: var(--text-soft);
-            max-width: 34rem;
-            margin-bottom: 20px;
-        }
-
-        .pillars {
-            display: grid;
-            grid-template-columns: repeat(3, minmax(0, 1fr));
-            gap: 20px;
-        }
-
-        .pillar {
-            background: radial-gradient(circle at top left,
-                        rgba(30, 64, 175, 0.35),
-                        rgba(15, 23, 42, 0.96));
-            border-radius: 14px;
-            border: 1px solid var(--border-subtle);
-            padding: 18px 18px 20px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6);
-        }
-
-        .pillar h3 {
-            margin-top: 0;
-            margin-bottom: 6px;
-            font-size: 1rem;
-        }
-
-        .pillar small {
-            display: block;
-            font-size: 0.78rem;
-            text-transform: uppercase;
-            letter-spacing: 0.16em;
-            color: var(--accent-strong);
-            margin-bottom: 8px;
-        }
-
-        .pillar p {
-            font-size: 0.92rem;
-            color: var(--text-soft);
-            margin: 0;
-        }
-
-        /* Two-column content */
-        .two-column {
-            display: grid;
-            grid-template-columns: minmax(0, 1.4fr) minmax(0, 1.6fr);
-            gap: 26px;
-            align-items: flex-start;
-        }
-
-        .keylist {
-            list-style: none;
-            padding: 0;
-            margin: 12px 0 0;
-            font-size: 0.94rem;
-            color: var(--text-soft);
-        }
-
-        .keylist li {
-            display: flex;
-            gap: 10px;
-            align-items: flex-start;
-            margin-bottom: 8px;
-        }
-
-        .keylist-bullet {
-            margin-top: 4px;
-            font-size: 0.9rem;
-            color: var(--accent-strong);
-        }
-
-        .card {
-            border-radius: 14px;
-            border: 1px solid var(--border-subtle);
-            background: radial-gradient(circle at top,
-                        rgba(15, 23, 42, 0.92),
-                        #020617 70%);
-            padding: 18px 18px 20px;
-        }
-
-        .card h3 {
-            margin-top: 0;
-            margin-bottom: 8px;
-            font-size: 1rem;
-        }
-
-        .card p {
-            font-size: 0.93rem;
-            color: var(--text-soft);
-            margin: 0 0 8px;
-        }
-
-        .pill-tag-row {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 8px;
-            margin-top: 8px;
-        }
-
-        .pill-tag {
-            font-size: 0.75rem;
-            padding: 3px 10px;
-            border-radius: 999px;
-            border: 1px solid rgba(148, 163, 184, 0.5);
-            color: var(--text-soft);
-        }
-
-        /* Contact section */
-        .contact-card {
-            border-radius: 14px;
-            border: 1px solid var(--border-subtle);
-            background: radial-gradient(circle at top,
-                        rgba(15, 23, 42, 0.96),
-                        #020617 75%);
-            padding: 18px 18px 20px;
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
-        }
-
-        .contact-card p {
-            margin: 0;
-            font-size: 0.95rem;
-            color: var(--text-soft);
-        }
-
-        .contact-line {
-            font-size: 0.95rem;
-        }
-
-        .contact-label {
-            color: var(--text-subtle);
-            font-size: 0.86rem;
-            text-transform: uppercase;
-            letter-spacing: 0.14em;
-        }
-
-        /* Footer */
-        footer {
-            margin-top: 60px;
-            padding: 20px;
-            border-top: 1px solid rgba(31, 41, 55, 0.9);
-            text-align: center;
-            color: var(--text-subtle);
-            font-size: 0.85rem;
-            background: radial-gradient(circle at top, #020617, #020617 65%, #000 100%);
-        }
-
-        footer p {
-            margin: 4px 0;
-        }
-
-        footer .imprint-note {
-            font-size: 0.8rem;
-            color: var(--text-soft);
-        }
-
-        @media (max-width: 900px) {
-            .hero-inner {
-                grid-template-columns: minmax(0, 1fr);
-                padding-bottom: 26px;
-            }
-
-            .hero-aside {
-                margin-top: 10px;
-            }
-
-            .pillars {
-                grid-template-columns: minmax(0, 1fr);
-            }
-
-            .two-column {
-                grid-template-columns: minmax(0, 1fr);
-            }
-
-            .nav-links {
-                display: none;
-            }
-        }
-    </style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ByteCore Media — Deterministic Governance for Enterprise AI</title>
+
+  <style>
+    :root {
+      --bg: #050509;
+      --bg-elevated: #101017;
+      --bg-soft: #141421;
+      --border-subtle: #262638;
+      --text-main: #f9fafb;
+      --text-muted: #9ca3af;
+      --accent: #fbbf24;
+      --accent-soft: rgba(251, 191, 36, 0.18);
+      --accent-strong: #facc15;
+      --pillars-gap: 24px;
+      --radius-lg: 18px;
+      --radius-pill: 999px;
+      --shadow-soft: 0 18px 45px rgba(0, 0, 0, 0.55);
+      --shadow-subtle: 0 10px 30px rgba(0, 0, 0, 0.4);
+      --max-width: 1100px;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
+        sans-serif;
+      background: radial-gradient(circle at top, #111827 0, #020309 55%);
+      color: var(--text-main);
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* Layout shell */
+    .shell {
+      max-width: var(--max-width);
+      margin: 0 auto;
+      padding: 0 20px 64px;
+    }
+
+    header {
+      border-bottom: 1px solid rgba(55, 65, 81, 0.6);
+      background: radial-gradient(circle at top left, #111827 0, #020309 55%);
+      box-shadow: var(--shadow-soft);
+    }
+
+    .hero {
+      padding: 42px 0 40px;
+      display: grid;
+      grid-template-columns: minmax(0, 3fr) minmax(0, 2.6fr);
+      gap: 32px;
+      align-items: center;
+    }
+
+    @media (max-width: 880px) {
+      .hero {
+        grid-template-columns: minmax(0, 1fr);
+        padding-top: 32px;
+      }
+    }
+
+    .logo-row {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 10px;
+    }
+
+    .logo-mark {
+      width: 32px;
+      height: 32px;
+      border-radius: 10px;
+      background: conic-gradient(from 220deg, #fbbf24, #22d3ee, #6366f1, #fbbf24);
+      box-shadow: 0 0 0 2px rgba(15, 23, 42, 0.9),
+        0 12px 30px rgba(15, 23, 42, 0.9);
+    }
+
+    .brand-name {
+      font-size: 1.05rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+    }
+
+    h1 {
+      font-size: clamp(2.25rem, 2.9vw + 1.8rem, 3.1rem);
+      margin: 0 0 10px;
+    }
+
+    .hero-highlight {
+      font-weight: 650;
+      background: linear-gradient(120deg, #fbbf24, #facc15);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+    }
+
+    .hero-subtitle {
+      font-size: 1.1rem;
+      color: var(--text-muted);
+      max-width: 40rem;
+      margin-bottom: 22px;
+    }
+
+    .hero-meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px 16px;
+      font-size: 0.9rem;
+      color: var(--text-muted);
+      margin-bottom: 24px;
+    }
+
+    .hero-meta span {
+      padding: 4px 10px;
+      border-radius: 999px;
+      background: rgba(31, 41, 55, 0.9);
+      border: 1px solid rgba(55, 65, 81, 0.9);
+    }
+
+    /* Buttons & links */
+    a {
+      color: var(--accent);
+      text-decoration: none;
+      font-weight: 500;
+    }
+
+    a:visited {
+      color: var(--accent-strong);
+    }
+
+    a:hover,
+    a:focus {
+      text-decoration: underline;
+    }
+
+    .btn-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-bottom: 10px;
+    }
+
+    .btn-primary,
+    .btn-ghost {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      padding: 0.7rem 1.5rem;
+      border-radius: var(--radius-pill);
+      font-size: 0.95rem;
+      font-weight: 550;
+      border: 1px solid transparent;
+      cursor: pointer;
+      text-decoration: none;
+    }
+
+    .btn-primary {
+      background: linear-gradient(135deg, #fbbf24, #f59e0b);
+      color: #111827;
+      box-shadow: 0 14px 30px rgba(0, 0, 0, 0.55);
+    }
+
+    .btn-primary:hover {
+      text-decoration: none;
+      transform: translateY(-1px);
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.7);
+    }
+
+    .btn-ghost {
+      background: rgba(15, 23, 42, 0.9);
+      border-color: rgba(75, 85, 99, 0.9);
+      color: var(--text-main);
+    }
+
+    .btn-ghost:hover {
+      text-decoration: none;
+      background: rgba(17, 24, 39, 1);
+      border-color: rgba(148, 163, 184, 1);
+    }
+
+    .btn-icon {
+      font-size: 1.1rem;
+      line-height: 1;
+    }
+
+    .hero-footnote {
+      font-size: 0.82rem;
+      color: var(--text-muted);
+    }
+
+    /* Hero “card” on the right */
+    .hero-card {
+      background: radial-gradient(circle at top, #111827 0, #020617 65%);
+      border-radius: var(--radius-lg);
+      border: 1px solid rgba(55, 65, 81, 0.8);
+      padding: 20px 20px 22px;
+      box-shadow: var(--shadow-subtle);
+    }
+
+    .hero-card-label {
+      font-size: 0.78rem;
+      text-transform: uppercase;
+      letter-spacing: 0.16em;
+      color: var(--text-muted);
+      margin-bottom: 8px;
+    }
+
+    .hero-card-title {
+      font-size: 1.05rem;
+      margin-bottom: 8px;
+    }
+
+    .hero-card-body {
+      font-size: 0.9rem;
+      color: var(--text-muted);
+      margin-bottom: 14px;
+    }
+
+    .pill-list {
+      list-style: none;
+      padding: 0;
+      margin: 0 0 12px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .pill-list li {
+      font-size: 0.78rem;
+      padding: 4px 9px;
+      border-radius: 999px;
+      border: 1px solid rgba(55, 65, 81, 0.9);
+      background: rgba(15, 23, 42, 0.8);
+    }
+
+    .hero-card-footer {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+    }
+
+    /* Sections */
+    main {
+      background: radial-gradient(circle at top, #020617 0, #020309 55%);
+    }
+
+    .section {
+      padding: 40px 0 8px;
+    }
+
+    .section--tight {
+      padding-top: 28px;
+    }
+
+    .section-header {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      margin-bottom: 18px;
+    }
+
+    .eyebrow {
+      text-transform: uppercase;
+      letter-spacing: 0.18em;
+      font-size: 0.78rem;
+      color: var(--accent-strong);
+    }
+
+    h2 {
+      font-size: 1.6rem;
+      margin: 0;
+    }
+
+    .section-lead {
+      font-size: 0.98rem;
+      color: var(--text-muted);
+      max-width: 48rem;
+    }
+
+    /* Pillars grid */
+    .pillars {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: var(--pillars-gap);
+      margin-top: 16px;
+    }
+
+    @media (max-width: 880px) {
+      .pillars {
+        grid-template-columns: minmax(0, 1fr);
+      }
+    }
+
+    .pillar {
+      background: var(--bg-soft);
+      border-radius: var(--radius-lg);
+      padding: 18px 18px 20px;
+      border: 1px solid var(--border-subtle);
+      box-shadow: 0 16px 32px rgba(0, 0, 0, 0.45);
+    }
+
+    .pillar h3 {
+      margin: 0 0 6px;
+      font-size: 1.05rem;
+    }
+
+    .pillar-tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 0.76rem;
+      text-transform: uppercase;
+      letter-spacing: 0.16em;
+      color: var(--text-muted);
+      margin-bottom: 6px;
+    }
+
+    .pillar-tag-dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 999px;
+      background: var(--accent);
+    }
+
+    .pillar p {
+      margin: 4px 0 0;
+      font-size: 0.92rem;
+      color: var(--text-muted);
+    }
+
+    /* Spine section */
+    .spine-card {
+      margin-top: 18px;
+      border-radius: var(--radius-lg);
+      border: 1px solid var(--border-subtle);
+      background: radial-gradient(circle at top left, #111827 0, #020617 70%);
+      padding: 20px 20px 22px;
+      box-shadow: var(--shadow-soft);
+    }
+
+    .spine-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 3fr) minmax(0, 2fr);
+      gap: 22px;
+    }
+
+    @media (max-width: 880px) {
+      .spine-grid {
+        grid-template-columns: minmax(0, 1fr);
+      }
+    }
+
+    .spine-text p {
+      font-size: 0.95rem;
+      color: var(--text-muted);
+      margin: 0 0 10px;
+    }
+
+    .spine-text ul {
+      margin: 8px 0 12px 18px;
+      padding: 0;
+      font-size: 0.9rem;
+      color: var(--text-muted);
+    }
+
+    .spine-text li {
+      margin-bottom: 4px;
+    }
+
+    .spine-meta {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      margin-top: 6px;
+    }
+
+    .spine-meta strong {
+      color: var(--text-main);
+    }
+
+    .spine-cta {
+      margin-top: 12px;
+    }
+
+    .spine-cta .btn-primary {
+      font-size: 0.9rem;
+      padding-inline: 1.3rem;
+    }
+
+    .spine-cta-secondary {
+      display: inline-block;
+      font-size: 0.85rem;
+      margin-left: 10px;
+    }
+
+    /* “Who it’s for” */
+    .audience-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: var(--pillars-gap);
+      margin-top: 12px;
+    }
+
+    @media (max-width: 880px) {
+      .audience-grid {
+        grid-template-columns: minmax(0, 1fr);
+      }
+    }
+
+    .audience-card {
+      background: var(--bg-elevated);
+      border-radius: var(--radius-lg);
+      padding: 16px 16px 18px;
+      border: 1px solid var(--border-subtle);
+    }
+
+    .audience-label {
+      font-size: 0.8rem;
+      text-transform: uppercase;
+      letter-spacing: 0.16em;
+      color: var(--text-muted);
+      margin-bottom: 4px;
+    }
+
+    .audience-card h3 {
+      font-size: 1rem;
+      margin: 0 0 6px;
+    }
+
+    .audience-card p {
+      margin: 0;
+      font-size: 0.9rem;
+      color: var(--text-muted);
+    }
+
+    /* Contact / Work with ByteCore Media */
+    .contact-card {
+      margin-top: 14px;
+      border-radius: var(--radius-lg);
+      border: 1px solid var(--border-subtle);
+      background: rgba(15, 23, 42, 0.9);
+      padding: 18px 18px 20px;
+      display: grid;
+      grid-template-columns: minmax(0, 3fr) minmax(0, 2fr);
+      gap: 16px;
+      align-items: center;
+    }
+
+    @media (max-width: 780px) {
+      .contact-card {
+        grid-template-columns: minmax(0, 1fr);
+      }
+    }
+
+    .contact-card p {
+      margin: 0 0 8px;
+      font-size: 0.9rem;
+      color: var(--text-muted);
+    }
+
+    .contact-email {
+      font-size: 0.95rem;
+      margin-bottom: 4px;
+    }
+
+    .contact-note {
+      font-size: 0.82rem;
+      color: var(--text-muted);
+    }
+
+    /* Publishing note */
+    .publishing-note {
+      margin-top: 8px;
+      font-size: 0.85rem;
+      color: var(--text-muted);
+    }
+
+    .publishing-note strong {
+      color: var(--text-main);
+    }
+
+    footer {
+      border-top: 1px solid rgba(55, 65, 81, 0.8);
+      padding: 16px 20px 22px;
+      font-size: 0.82rem;
+      color: var(--text-muted);
+      background: #020309;
+    }
+
+    .footer-inner {
+      max-width: var(--max-width);
+      margin: 0 auto;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px 16px;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .footer-inner span {
+      opacity: 0.9;
+    }
+  </style>
 </head>
 
 <body>
-<div class="page">
-    <!-- Top nav -->
-    <div class="nav">
-        <div class="nav-left">
-            <div class="brand-mark">BC</div>
-            <div class="brand-text">
-                <div class="brand-title">ByteCore Media</div>
-                <div class="brand-tagline">Deterministic Governance for Enterprise AI</div>
-            </div>
+  <header>
+    <div class="shell">
+      <div class="hero">
+        <!-- Left: main messaging -->
+        <div>
+          <div class="logo-row">
+            <div class="logo-mark"></div>
+            <div class="brand-name">ByteCore Media</div>
+          </div>
+
+          <h1>
+            Deterministic governance<br />
+            for <span class="hero-highlight">enterprise AI systems</span>
+          </h1>
+
+          <p class="hero-subtitle">
+            ByteCore’s Deterministic Governance Spine wraps your
+            probabilistic models in a predictable, auditable, rule-driven
+            control layer — so you can trust what your AI is allowed to do.
+          </p>
+
+          <div class="hero-meta">
+            <span>Method, not SaaS</span>
+            <span>Architecture you license &amp; implement</span>
+            <span>Built for high-stakes &amp; regulated use</span>
+          </div>
+
+          <div class="btn-row">
+            <a href="spine.html" class="btn-primary">
+              <span>Read the Spine explainer</span>
+              <span class="btn-icon">→</span>
+            </a>
+
+            <a href="mailto:kirk@bytecoremedia.com" class="btn-ghost">
+              <span>Contact ByteCore Media</span>
+            </a>
+          </div>
+
+          <div class="hero-footnote">
+            The model can stay probabilistic. The governance does not.
+          </div>
         </div>
-        <nav class="nav-links">
-            <a href="#spine">Spine</a>
-            <a href="#architecture">Architecture</a>
-            <a href="#fit">Where It Fits</a>
-            <a href="#contact">Contact</a>
-        </nav>
+
+        <!-- Right: spine summary card -->
+        <aside class="hero-card">
+          <div class="hero-card-label">Core layer</div>
+          <div class="hero-card-title">ByteCore Deterministic Governance Spine</div>
+          <div class="hero-card-body">
+            A supervisory control layer that sits
+            <strong>around</strong> your AI, encoding invariants, routing,
+            and audit trails so every outcome has a clear,
+            reviewable chain of responsibility.
+          </div>
+
+          <ul class="pill-list">
+            <li>Deterministic control over model calls</li>
+            <li>Causal, machine-readable audit log</li>
+            <li>Policy &amp; boundary enforcement</li>
+          </ul>
+
+          <div class="hero-card-footer">
+            <strong>Offering:</strong> ByteCore Deterministic Governance Architecture  
+            <br />
+            Spine = the runtime layer that enforces it.
+          </div>
+        </aside>
+      </div>
     </div>
+  </header>
 
-    <!-- HERO -->
-    <header class="hero">
-        <div class="hero-inner">
-            <div>
-                <div class="eyebrow">
-                    <span class="eyebrow-dot"></span>
-                    <span>Governance first, not model first</span>
-                </div>
-
-                <h1 class="hero-title">
-                    A <span class="hero-highlight">deterministic spine</span> for inherently probabilistic AI.
-                </h1>
-
-                <p class="hero-subtitle">
-                    ByteCore Media’s Deterministic Governance Spine is a supervisory layer
-                    that wraps your AI estate with fixed rules, traceable decisions,
-                    and clear lines of responsibility.
-                </p>
-
-                <p class="hero-subsubtitle">
-                    The models stay probabilistic. The <strong>governance</strong> does not.
-                </p>
-
-                <div class="hero-actions">
-                    <a class="btn btn-primary" href="mailto:kirk@bytecoremedia.com?subject=ByteCore%20Deterministic%20Governance%20Pilot">
-                        Contact ByteCore Media<span class="icon">↗</span>
-                    </a>
-                    <a class="btn btn-ghost" href="spine.html">
-                        Read the Spine explainer<span class="icon">→</span>
-                    </a>
-                </div>
-            </div>
-
-            <aside class="hero-aside">
-                <div class="hero-aside-header">ByteCore Deterministic Governance Spine</div>
-                <div class="hero-aside-title">Supervisory control around your AI models</div>
-                <div class="hero-aside-body">
-                    A method and architecture for wrapping enterprise AI with deterministic
-                    rules, audit trails, and policy enforcement — without turning you
-                    into a SaaS customer of someone else’s black box.
-                </div>
-
-                <ul class="hero-aside-list">
-                    <li>
-                        <span class="hero-aside-badge">Method, not product</span>
-                    </li>
-                    <li>
-                        <span>• Implemented inside your environment, under your security and compliance.</span>
-                    </li>
-                    <li>
-                        <span>• Designed to sit above multiple vendors, models, and use cases.</span>
-                    </li>
-                    <li>
-                        <span>• Built for high-stakes and regulated workflows where “we don’t know” is not acceptable.</span>
-                    </li>
-                </ul>
-            </aside>
+  <main>
+    <div class="shell">
+      <!-- Pillars -->
+      <section class="section">
+        <div class="section-header">
+          <div class="eyebrow">Governance focus</div>
+          <h2>Three pillars of deterministic AI governance</h2>
+          <p class="section-lead">
+            The ByteCore Spine is designed to do a small number of things
+            exceptionally well — and to do them the same way every time,
+            regardless of which model or vendor you plug in underneath.
+          </p>
         </div>
-    </header>
 
-    <main>
-        <!-- Three pillars -->
-        <section class="section" id="spine">
-            <div class="section-heading-row">
-                <h2 class="section-title">The Spine at a glance</h2>
-                <div class="section-kicker">Three pillars of deterministic governance</div>
+        <div class="pillars">
+          <div class="pillar">
+            <div class="pillar-tag">
+              <span class="pillar-tag-dot"></span>
+              <span>Pillar one</span>
             </div>
-            <p class="section-lead">
-                The ByteCore Deterministic Governance Spine is the core layer inside the
-                broader ByteCore Deterministic Governance Architecture. It enforces how
-                your AI is allowed to behave — and how those decisions are recorded.
+            <h3>Deterministic control</h3>
+            <p>
+              Wrap one or many models in explicit, inspectable governance
+              logic. Enforce fixed decision flows, invariants, and
+              fallbacks so you always know what your AI is allowed to do.
             </p>
+          </div>
 
-            <div class="pillars">
-                <div class="pillar">
-                    <small>Pillar 01</small>
-                    <h3>Deterministic control</h3>
-                    <p>
-                        A rule-driven supervisory layer that defines what the system
-                        <em>must</em> check and honor before any model output is allowed
-                        to leave the stack.
-                    </p>
-                </div>
-
-                <div class="pillar">
-                    <small>Pillar 02</small>
-                    <h3>Transparent causality</h3>
-                    <p>
-                        Every decision path — prompts, rules, model calls, and chosen
-                        outcome — is captured in a structured audit trail suitable for
-                        human review and machine analysis.
-                    </p>
-                </div>
-
-                <div class="pillar">
-                    <small>Pillar 03</small>
-                    <h3>Enterprise accountability</h3>
-                    <p>
-                        Organizational policies become executable invariants, applied
-                        consistently across vendors and use cases so ownership for
-                        outcomes is never ambiguous.
-                    </p>
-                </div>
+          <div class="pillar">
+            <div class="pillar-tag">
+              <span class="pillar-tag-dot"></span>
+              <span>Pillar two</span>
             </div>
-        </section>
+            <h3>Transparent causality</h3>
+            <p>
+              Every interaction produces a structured record: what was
+              asked, which rules fired, which calls were made, and why a
+              particular outcome was chosen — ready for audit or review.
+            </p>
+          </div>
 
-        <!-- Architecture & fit -->
-        <section class="section" id="architecture">
-            <div class="section-heading-row">
-                <h2 class="section-title">Where the Spine lives in your stack</h2>
-                <div class="section-kicker">Architecture, not a hosted product</div>
+          <div class="pillar">
+            <div class="pillar-tag">
+              <span class="pillar-tag-dot"></span>
+              <span>Pillar three</span>
             </div>
+            <h3>Enterprise accountability</h3>
+            <p>
+              Encode safety, legal, ethical, and business policies as hard
+              guards instead of soft guidance, and apply them consistently
+              across models, domains, and teams.
+            </p>
+          </div>
+        </div>
+      </section>
 
-            <div class="two-column">
-                <div>
-                    <p class="section-lead">
-                        ByteCore Media licenses a deterministic governance architecture — not a hosted AI
-                        platform. The Spine is the core layer that enforces this method at run-time.
-                    </p>
+      <!-- Spine detail -->
+      <section class="section section--tight">
+        <div class="section-header">
+          <div class="eyebrow">Architecture</div>
+          <h2>The Spine inside the ByteCore Deterministic Governance Architecture</h2>
+          <p class="section-lead">
+            The Architecture is the overall method for governing AI.
+            The Spine is the core runtime layer that operationalizes that
+            method in live systems.
+          </p>
+        </div>
 
-                    <ul class="keylist">
-                        <li>
-                            <span class="keylist-bullet">•</span>
-                            <span><strong>Company:</strong> ByteCore Media</span>
-                        </li>
-                        <li>
-                            <span class="keylist-bullet">•</span>
-                            <span><strong>Offering:</strong> ByteCore Deterministic Governance Architecture</span>
-                        </li>
-                        <li>
-                            <span class="keylist-bullet">•</span>
-                            <span><strong>Core layer:</strong> ByteCore Deterministic Governance Spine</span>
-                        </li>
-                    </ul>
+        <div class="spine-card">
+          <div class="spine-grid">
+            <div class="spine-text">
+              <p>
+                Most enterprise AI today is still a collection of
+                powerful but opaque probabilistic engines. The
+                ByteCore Spine introduces a <strong>deterministic
+                frame</strong> on top of that uncertainty.
+              </p>
 
-                    <p class="section-lead" style="margin-top:16px;">
-                        Implementation happens inside your environment, under your existing security,
-                        compliance, and change-control processes.
-                    </p>
-                </div>
+              <ul>
+                <li>
+                  Encodes your governance invariants — the rules that
+                  must never be violated.
+                </li>
+                <li>
+                  Orchestrates model calls and fallbacks under those
+                  constraints.
+                </li>
+                <li>
+                  Emits audit-ready traces for every decision.
+                </li>
+              </ul>
 
-                <div class="card">
-                    <h3>What ByteCore provides</h3>
-                    <p>
-                        A structured approach and reference design for making AI systems
-                        stable, auditable, and accountable — on top of the probabilistic
-                        models you already use.
-                    </p>
-                    <p>
-                        The Spine doesn’t replace your models. It gives you a deterministic
-                        framework that governs how they are called, what they are allowed
-                        to do, and how those decisions are recorded.
-                    </p>
-                    <div class="pill-tag-row">
-                        <span class="pill-tag">Deterministic invariants</span>
-                        <span class="pill-tag">Causal audit trails</span>
-                        <span class="pill-tag">Policy enforcement</span>
-                        <span class="pill-tag">Vendor-agnostic layer</span>
-                    </div>
-                </div>
-            </div>
-        </section>
+              <p>
+                This is not a one-click SaaS product. It is an
+                implementable architecture you license and run inside
+                your own environment, under your own security and
+                compliance controls.
+              </p>
 
-        <!-- Organizational fit -->
-        <section class="section" id="fit">
-            <div class="section-heading-row">
-                <h2 class="section-title">Who the Spine is for</h2>
-                <div class="section-kicker">High-stakes and regulated AI</div>
+              <div class="spine-meta">
+                <strong>Company:</strong> ByteCore Media  
+                <br />
+                <strong>Offering:</strong> ByteCore Deterministic Governance Architecture  
+                <br />
+                <strong>Core layer:</strong> ByteCore Deterministic Governance Spine
+              </div>
             </div>
 
-            <div class="two-column">
-                <div>
-                    <p class="section-lead">
-                        The Spine is designed for teams who need more than “good model
-                        performance.” It is for organizations that have to explain
-                        <em>why</em> a system behaved the way it did.
-                    </p>
-                    <ul class="keylist">
-                        <li>
-                            <span class="keylist-bullet">•</span>
-                            <span>High-stakes decisioning (operations, risk, safety, compliance).</span>
-                        </li>
-                        <li>
-                            <span class="keylist-bullet">•</span>
-                            <span>Regulated environments that require evidence, not intuition.</span>
-                        </li>
-                        <li>
-                            <span class="keylist-bullet">•</span>
-                            <span>Enterprises standardizing governance across multiple AI vendors.</span>
-                        </li>
-                    </ul>
-                </div>
-
-                <div class="card">
-                    <h3>Practical adoption path</h3>
-                    <p>
-                        Most teams begin with a focused pilot — a single workflow or
-                        business unit where governance and auditability matter most.
-                    </p>
-                    <p>
-                        From there, the Spine can be extended to additional models and
-                        domains, and gradually adopted as the common governance layer
-                        for the wider AI estate.
-                    </p>
-                </div>
+            <div>
+              <div class="spine-cta">
+                <a href="spine.html" class="btn-primary">
+                  Read the detailed Spine explainer
+                </a>
+                <a href="mailto:kirk@bytecoremedia.com" class="spine-cta-secondary">
+                  or request a pilot conversation →
+                </a>
+              </div>
             </div>
-        </section>
+          </div>
+        </div>
+      </section>
 
-        <!-- Contact -->
-        <section class="section" id="contact">
-            <div class="section-heading-row">
-                <h2 class="section-title">Contact / Work with ByteCore Media</h2>
-                <div class="section-kicker">Next steps</div>
-            </div>
+      <!-- Who it's for -->
+      <section class="section section--tight">
+        <div class="section-header">
+          <div class="eyebrow">Who it’s for</div>
+          <h2>Teams who need AI they can defend</h2>
+          <p class="section-lead">
+            The ByteCore Spine is built for organizations that can’t
+            afford “it seemed like a good idea at the time” as an
+            explanation.
+          </p>
+        </div>
 
-            <div class="contact-card">
-                <p>
-                    If you are exploring deterministic governance for your AI systems,
-                    or considering a pilot implementation of the ByteCore Deterministic
-                    Governance Spine, you can reach ByteCore Media directly.
-                </p>
+        <div class="audience-grid">
+          <div class="audience-card">
+            <div class="audience-label">Risk &amp; compliance</div>
+            <h3>Regulated environments</h3>
+            <p>
+              Financial, healthcare, insurance, public sector, and any
+              domain where regulators will eventually ask, “Why did the
+              system do this — and did it follow your rules?”
+            </p>
+          </div>
 
-                <p class="contact-line">
-                    <span class="contact-label">Primary contact</span><br />
-                    <a href="mailto:kirk@bytecoremedia.com">kirk@bytecoremedia.com</a>
-                </p>
+          <div class="audience-card">
+            <div class="audience-label">Architecture &amp; platform</div>
+            <h3>Central AI platform teams</h3>
+            <p>
+              Groups responsible for providing shared AI capabilities
+              across the enterprise and standardizing governance rather
+              than reinventing it for every new use case.
+            </p>
+          </div>
 
-                <p class="contact-line">
-                    Please include a brief note on your current AI footprint and where
-                    governance, auditability, or policy enforcement is creating pressure.
-                </p>
-            </div>
-        </section>
-    </main>
+          <div class="audience-card">
+            <div class="audience-label">Leadership</div>
+            <h3>Executives &amp; boards</h3>
+            <p>
+              Leaders who want to lean into AI while still being able
+              to explain, document, and defend the behavior of systems
+              built on inherently probabilistic models.
+            </p>
+          </div>
+        </div>
+      </section>
 
-    <footer>
-        <p class="imprint-note">
-            ByteCore Media is the home for the ByteCore Deterministic Governance Architecture,
-            along with selected works published under the ByteCore Media imprint.
+      <!-- Contact / Work with ByteCore Media -->
+      <section class="section section--tight">
+        <div class="section-header">
+          <div class="eyebrow">Work with ByteCore Media</div>
+          <h2>Contact / next steps</h2>
+          <p class="section-lead">
+            Whether you’re exploring an early pilot, assessing fit for
+            your environment, or simply want to understand the
+            architecture in more depth, you can start with a
+            conversation.
+          </p>
+        </div>
+
+        <div class="contact-card">
+          <div>
+            <p>
+              For inquiries, pilot discussions, or partnership
+              conversations, reach out directly:
+            </p>
+            <p class="contact-email">
+              Email:
+              <a href="mailto:kirk@bytecoremedia.com">
+                kirk@bytecoremedia.com
+              </a>
+            </p>
+            <p class="contact-note">
+              Please include a brief note on your role, the AI systems
+              you’re working with, and the governance challenges you’re
+              trying to solve.
+            </p>
+          </div>
+          <div>
+            <a href="mailto:kirk@bytecoremedia.com" class="btn-primary">
+              Start a conversation
+            </a>
+          </div>
+        </div>
+
+        <p class="publishing-note">
+          <strong>Publishing:</strong> ByteCore Media also serves as the
+          imprint for selected books and written projects. Those works
+          share the same focus on structure, clarity, and accountable
+          decision-making that underpins the ByteCore Governance
+          Architecture.
         </p>
-        <p>ByteCore Media LLC • © 2025 • All rights reserved</p>
-    </footer>
+      </section>
+    </div>
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+      <span>ByteCore Media LLC • © 2025 • All rights reserved.</span>
+      <span>Deterministic Governance Architecture for Enterprise AI.</span>
+    </div>
+  </footer>
+</body>
+</html>
+
 </div>
 </body>
 </html>

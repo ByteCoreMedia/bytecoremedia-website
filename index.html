@@ -1,140 +1,154 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>ByteCore Media — Deterministic Governance Architecture</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ByteCore Media — Deterministic AI Governance</title>
 
     <style>
         body {
             margin: 0;
-            padding: 0;
-            font-family: "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-            background-color: #0e0e11;
-            color: #e5e5e5;
+            font-family: Arial, Helvetica, sans-serif;
+            background-color: #0d0d0d;
+            color: #e6e6e6;
             line-height: 1.6;
         }
 
         header {
-            padding: 40px 5%;
-            background: linear-gradient(135deg, #111118, #1a1a22);
-            border-bottom: 1px solid #2c2c36;
+            padding: 40px 20px;
             text-align: center;
+            background: linear-gradient(135deg, #1e1e1e, #0f0f0f);
+            border-bottom: 1px solid #333;
         }
 
-        header h1 {
-            margin: 0;
+        h1 {
             font-size: 2.8rem;
-            font-weight: 600;
-            letter-spacing: 0.5px;
+            margin-bottom: 10px;
             color: #ffffff;
         }
 
-        header p {
-            margin-top: 10px;
+        .subtitle {
             font-size: 1.2rem;
-            color: #b3b3c6;
-            max-width: 700px;
-            margin-left: auto;
-            margin-right: auto;
+            color: #bfbfbf;
         }
 
         .section {
-            padding: 60px 10%;
-            max-width: 1100px;
-            margin: auto;
-        }
-
-        .card {
-            background: #17171f;
-            padding: 30px;
-            border-radius: 10px;
-            border: 1px solid #2a2a33;
-            margin-bottom: 40px;
+            max-width: 900px;
+            margin: 60px auto;
+            padding: 0 20px;
         }
 
         h2 {
             color: #ffffff;
-            margin-top: 0;
             font-size: 1.8rem;
-            font-weight: 600;
-        }
-
-        p {
-            color: #ccccd6;
+            margin-bottom: 15px;
+            border-left: 4px solid #4da6ff;
+            padding-left: 10px;
         }
 
         a {
-            color: #66aaff;
+            color: #4da6ff;
             text-decoration: none;
-            font-weight: 500;
         }
 
         a:hover {
-            color: #8dbdff;
+            text-decoration: underline;
+            color: #80c1ff;
+        }
+
+        .pillars {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            margin-top: 25px;
+        }
+
+        .pillar {
+            flex: 1 1 calc(33% - 20px);
+            background: #1a1a1a;
+            padding: 20px;
+            border-radius: 8px;
+            border: 1px solid #333;
         }
 
         footer {
+            margin-top: 50px;
+            padding: 20px;
             text-align: center;
-            padding: 30px 10%;
-            color: #77778a;
+            color: #888;
             font-size: 0.9rem;
-            border-top: 1px solid #2c2c36;
-            margin-top: 60px;
+            border-top: 1px solid #333;
+        }
+
+        @media (max-width: 700px) {
+            .pillar {
+                flex: 1 1 100%;
+            }
         }
     </style>
 </head>
 
 <body>
-    <header>
-        <h1>ByteCore Media</h1>
-        <p>
-            Home of the ByteCore Deterministic Governance Architecture — a framework for making AI systems predictable, auditable, and accountable.
-        </p>
-    </header>
 
-    <section class="section">
-        <div class="card">
-            <h2>ByteCore Deterministic Governance Spine</h2>
-            <p>
-                The Spine is a deterministic supervisory layer that wraps modern probabilistic AI systems with transparent rules, traceable decision flows, and enforceable governance invariants.
-            </p>
-            <p>
-                It provides organizations with a structured way to ensure consistent, explainable behavior across any AI model or vendor.
-            </p>
-            <p>
-                <a href="docs/bytecore-deterministic-governance-spine.html">Read the explainer →</a>
-            </p>
+<header>
+    <h1>ByteCore Media</h1>
+    <div class="subtitle">Deterministic Governance for Enterprise AI</div>
+</header>
+
+<section class="section">
+    <h2>The ByteCore Deterministic Governance Spine</h2>
+    <p>
+        A supervisory control layer that wraps around probabilistic AI models,
+        bringing <strong>predictability, transparency, and accountability</strong>
+        to systems that otherwise behave unpredictably.
+    </p>
+</section>
+
+<section class="section">
+    <h2>Three Pillars of Governance</h2>
+
+    <div class="pillars">
+        <div class="pillar">
+            <h3>Deterministic Control</h3>
+            <p>Explicit rules and repeatable decision paths enforced over any AI model.</p>
         </div>
 
-        <div class="card">
-            <h2>The ByteCore Approach</h2>
-            <p>
-                Modern AI is powerful but unpredictable. ByteCore provides a governance-first architecture that ensures your systems operate with deterministic clarity — even when the models themselves remain probabilistic.
-            </p>
-            <p>
-                Our framework can be licensed, adapted, and deployed inside your own environment with full security, compliance, and operational control.
-            </p>
+        <div class="pillar">
+            <h3>Transparent Causality</h3>
+            <p>Every action is logged with human-readable and machine-auditable rationale.</p>
         </div>
 
-        <div class="card">
-            <h2>About ByteCore Media</h2>
-            <p>
-                ByteCore Media operates as a unified technology and intellectual property umbrella, encompassing:
-            </p>
-            <ul>
-                <li>Deterministic AI governance architecture</li>
-                <li>Internal research and engineering frameworks</li>
-                <li>Creative and technical publishing under the ByteCore imprint</li>
-            </ul>
-            <p>
-                Each branch remains distinct, while sharing a common foundation of structure, clarity, and disciplined design.
-            </p>
+        <div class="pillar">
+            <h3>Enterprise Accountability</h3>
+            <p>Policies, boundaries, and guardrails applied consistently across the AI estate.</p>
         </div>
-    </section>
+    </div>
+</section>
 
-    <footer>
-        © 2025 ByteCore Media. All rights reserved.
-    </footer>
+<section class="section">
+    <h2>Learn More</h2>
+    <p>
+        For a deeper explanation of how the Spine works and where it fits in enterprise environments,
+        read the full overview here:
+    </p>
+    <p>
+        <a href="docs/bytecore-deterministic-governance-spine.html">
+            → What is the ByteCore Deterministic Governance Spine?
+        </a>
+    </p>
+</section>
+
+<section class="section">
+    <h2>Contact</h2>
+    <p>
+        For inquiries, pilot discussions, or partnership opportunities, contact:<br>
+        <a href="mailto:kirk@bytecoremedia.com">kirk@bytecoremedia.com</a>
+    </p>
+</section>
+
+<footer>
+    ByteCore Media LLC • © 2025 • All Rights Reserved
+</footer>
+
 </body>
 </html>
